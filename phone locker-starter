@@ -1,0 +1,15 @@
+name = input('Enter your name ')
+gender = input('Enter your gender ')
+age = int(input('Enter your age '))
+if name == "Merv":
+    print("Hi",name)
+    if gender == "male":
+        print('Lock1 unlocked')
+        if age == 24:
+             print("Phone unlocked successfully")
+        else :
+             print("try again")
+    else :
+        print("Lock1 locked")
+else:
+    print("Phone locked!! contact service provider")
