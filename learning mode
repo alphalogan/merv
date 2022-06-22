@@ -1,0 +1,21 @@
+val = input("Enter your name ")
+print('Hi !!' ,val, ',I am mathematicial genie making your life easy with math')
+print ('So lets begin')
+num = float(input("Enter the first number "))
+num1 = float(input("Enter the second number "))
+x= num+num1
+print('Sum of' ,num, 'and' ,num1, 'is' ,x)
+y=num-num1
+print('Difference of',num, 'and',num1, 'is' ,y)
+z=num/num1
+print('Quotient of',num, 'and',num1, 'is' , z)
+a=num*num1
+print('Multiplcation of',num, 'and' ,num1,'is' ,a)
+b=num//num1
+print('Quotient of floor divison is ',num,'and' ,num1, 'is' ,b)
+c=num%num1
+print('Reminder of ',num, 'and',num1, 'is' ,c)
+d = num**num1
+print(num, 'to the power of',num1, 'is', d)
+e = num>=num1
+print('Is ',num ,' greater than or equal to ',num1,e)
