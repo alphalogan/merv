@@ -1,0 +1,15 @@
+list= []
+var = int(input("Enter the number of friends "))
+print("Enter the name of your" ,var ,"friends :")
+for i in range(0, var) :
+    ele = str(input())
+    list.append(ele)
+print(list)
+list.reverse()
+print("list in reversed form",list)
+var1 = input("Enter the new friend name")
+list.append(var1)
+print(list)
+var2 = input("Enter the friend name who left ")
+list.remove(var2)
+print(list)
