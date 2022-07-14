@@ -1,0 +1,165 @@
+import pandas as pd 
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("boston_data.csv")
+df.isnull().sum()
+df.isna().sum()
+df.describe
+plt.boxplot(df.crim,vert=0) # checking for outliers 
+plt.title("crim")
+## Finding IQR , Lower_limit and upper_ limit##
+IQR = df['crim'].quantile(0.75)-df['crim'].quantile(0.25)
+lower_limit = df['crim'].quantile(0.25)-(IQR * 1.5)
+upper_limit = df['crim'].quantile(0.75)+(IQR * 1.5)
+
+#Using Replace method to treat the outliers
+df['crim_replaced'] = pd.DataFrame(np.where(df['crim'] > upper_limit, upper_limit, np.where(df['crim'] < lower_limit, lower_limit, df['crim'])))
+sns.boxplot(df.df_replaced);plt.title('crim_replace');plt.show()
+
+df1 = df.drop(['df_replaced'],axis = 1) # dropping off the column which is been named as crim_replace
+
+from feature_engine.outliers import Winsorizer
+winsor = Winsorizer(capping_method='iqr', # choose  IQR rule boundaries or gaussian for mean and std
+                          tail='both', # cap left, right or both tails 
+                          fold=1.5,
+                          variables=['zn'])
+df_t = winsor.fit_transform(df[['zn']])
+
+plt.boxplot(df_t.zn,vert= 0)
+plt.title("zn")
+plt.show()
+
+plt.boxplot(df.indus,vert=0) # checking for outliers 
+plt.title("indus") 
+# no outliers present
+
+plt.boxplot(df.chas,vert=0) # checking for outliers 
+plt.title("chas")
+plt.hist(df.chas,color = 'red')
+plt.title("chas") # there seems to be only few values , we can drop it 
+df2 = df.drop(['chas'],axis = 1) # dropping the column
+
+
+plt.boxplot(df.nox,vert=0)   # no outlier present
+plt.title("nox")  
+
+plt.boxplot(df.rm,vert=0)  # outlier are present
+plt.title("rm")
+
+#using replace technique
+#lets find IQR,lower_limit and upper_limit
+IQR1 = df['rm'].quantile(0.75)-df['rm'].quantile(0.25)
+lower_limit1 = df['rm'].quantile(0.25)-(IQR1 * 1.5)
+upper_limit1 = df['rm'].quantile(0.75)+(IQR1 * 1.5)
+
+df['rm_replaced'] = pd.DataFrame(np.where(df['rm'] > upper_limit1, upper_limit1, np.where(df['rm'] < lower_limit1, lower_limit1, df['rm'])))
+sns.boxplot(df.rm_replaced);plt.title('rm_replaced');plt.show()
+#outlier treatment suceesfull
+
+# checking the data types of all the columns 
+df.dtypes
+
+plt.boxplot(df.age,vert=0)  # outlier are not  present
+plt.title("age")
+
+plt.boxplot(df.dis,vert=0)  # outlier are present
+plt.title("dis")
+
+#outlier treatment using winsorization
+from feature_engine.outliers import Winsorizer
+winsor = Winsorizer(capping_method='iqr', # choose  IQR rule boundaries or gaussian for mean and std
+                          tail='right', # cap left, right or both tails 
+                          fold=1.5,
+                          variables=['dis'])
+df_t1 = winsor.fit_transform(df[['dis']])
+
+plt.boxplot(df_t1.dis,vert= 0)
+plt.title("dis_replace")
+plt.show()
+
+plt.boxplot(df.rad,vert =0) # outliers are present
+plt.title("rad")
+
+plt.hist(df.rad,label= 'rad',color = "blue")
+
+#outlier treatment using winsorization
+from feature_engine.outliers import Winsorizer
+winsor = Winsorizer(capping_method='iqr', # choose  IQR rule boundaries or gaussian for mean and std
+                          tail='right', # cap left, right or both tails 
+                          fold=1.5,
+                          variables=['rad'])
+df_t2 = winsor.fit_transform(df[['rad']])
+
+plt.boxplot(df_t2.rad,vert= 0)
+plt.title("rad_replace")
+plt.show()
+# it can be infered that the outliers are taking up the higher values and it is causing masking
+
+plt.boxplot(df.tax, vert = 0) # no outliers are present
+plt.title("tax")
+
+
+plt.boxplot(df.ptratio,vert=0)  #outliers are present
+plt.title("ptratio")
+
+#outlier treatment
+from feature_engine.outliers import Winsorizer
+winsor = Winsorizer(capping_method='iqr', # choose  IQR rule boundaries or gaussian for mean and std
+                          tail='both', # cap left, right or both tails 
+                          fold=1.5,
+                          variables=['ptratio'])
+df_t3 = winsor.fit_transform(df[['ptratio']])
+
+plt.boxplot(df_t3,vert=0)
+plt.title("ptratio_replace")
+plt.show()
+
+
+plt.boxplot(df.black,vert = 0)  #outliers are present
+plt.title("black")
+
+# treatment of outliers from winsorizer
+from feature_engine.outliers import Winsorizer
+winsor = Winsorizer(capping_method ='iqr',
+                          tail='left',
+                          fold=1.5,
+                          variables=['black'])
+df_t4 = winsor.fit_transform(df[['black']])
+
+plt.boxplot(df_t4.black,vert = 0)
+plt.title("black_replaced")
+plt.show()
+
+
+plt.boxplot(df.lstat,vert=0)   # outliers are present 
+plt.title("lstat")
+
+#outlier treatment using winsorization
+from feature_engine.outliers import Winsorizer
+winsor = Winsorizer(capping_method = 'iqr',
+                    tail = 'right',
+                    fold = 1.5,
+                    variables = ['lstat'])
+df_t5 = winsor.fit_transform(df[['lstat']])
+
+plt.boxplot(df_t5.lstat, vert = 0)
+plt.title("lstat_replaced")
+plt.show()
+
+
+plt.boxplot(df.medv,vert = 0)  # outliers are present 
+plt.title("medv")
+
+# treatment of outliers winsorization
+from feature_engine.outliers import Winsorizer
+winsor = Winsorizer(capping_method = 'iqr',
+                    tail = 'both',
+                    fold = 1.5,
+                    variables = ['medv'])
+df_t6 = winsor.fit_transform(df[['medv']])
+
+plt.boxplot(df_t6.medv, vert = 0)
+plt.title("medv_replaced")
+plt.show()
